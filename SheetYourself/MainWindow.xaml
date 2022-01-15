@@ -94,9 +94,6 @@
         </TabItem>
         <TabItem Header="Quests"/>
         <TabItem Header="Log">
-            <TabItem.Resources>
-                <CollectionViewSource x:Key="Skills" Source="{Binding Skills}"/>
-            </TabItem.Resources>
             <DockPanel>
                 <Button Name="AddLogEntryButton" Content="Add Entry" DockPanel.Dock="Bottom" VerticalAlignment="Top" HorizontalAlignment="Right" Click="AddLogEntryButton_Click"/>
                 <ListView ItemsSource="{Binding LogEntries}">
@@ -116,11 +113,17 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Skill.Name}" Header="Skill"/>
+                            <GridViewColumn Header="Skill">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox DisplayMemberPath="Name" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.Skills}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content=" - " Click="RemoveLogEventButton_Click" CommandParameter="{Binding .}"/>
+                                        <Button Content=" - " Click="RemoveLogEventButton_Click" CommandParameter="{Binding}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
